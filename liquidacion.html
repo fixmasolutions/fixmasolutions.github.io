@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquidación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            /* background: #fff; */
+            font-size: 12px;
+
+            margin: 10px;
+            padding: 20px;
+
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            margin-top: 0px;
+            padding: 20px;
+            /* border: 1px solid #ccc; */
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        .header,
+        .details,
+        .footer {
+            margin-bottom: 10px;
+        }
+
+        .header div,
+        .details div {
+            margin-bottom: 5px;
+            margin-top: 0px;
+        }
+
+        .header-column {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .header-column>div {
+            flex: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .firmas {
+            text-align: center;
+            display: flex;
+            width: 100%;
+            margin-top: 20px;
+            justify-content: space-around;
+        }
+
+        .tipoconsumo {
+            color: red;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .actions button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 10px;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+        #printButton {
+            background-color: #007bff;
+        }
+
+        #pdfButton {
+            background-color: #28a745;
+        }
+
+        @media print {
+            .actions {
+                display: none;
+            }
+
+            body {
+                background-color: #fff;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+                box-shadow: inherit;
+                margin: 0;
+                padding: 0;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container" id="invoice-template">
+        <div class="header">
+            <h2>LIQUIDACION DE <span id="tipoconsumo"></span></h2>
+            <div class="header-column">
+                <div><strong>Transacción:</strong> <span id="transaccion"></span></div>
+                <div><strong>Periodo:</strong> <span id="periodo"></span></div>
+            </div>
+            <div class="header-column">
+                <div><strong>Nombre completo:</strong> <span id="visitador"></span></div>
+                <div><strong>Fecha liquidación:</strong> <span id="fechaliquidacion"></span></div>
+            </div>
+            <div class="header-column">
+                <div><strong>Monto asignado:</strong> <span id="montoasignado"></span></div>
+                <div><strong>NIT:</strong> <span id="nitvisitador"></span></div>
+            </div>
+            <div><strong>Monto a liquidar:</strong> <span id="montoliquidar"></span></div>
+            <div><strong>Saldo:</strong> <span id="diferencia"></span></div>
+        </div>
+        <div class="details">
+            <h3 style="text-align: center; font-size: 25px; color: red; font-weight: bold;">Detalle liquidación</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha factura</th>
+                        <th>Serie</th>
+                        <th>Numero</th>
+                        <th>Nit</th>
+                        <th>Empresa</th>
+                        <th>Cantidad</th>
+                        <th class="text-right">Precio Unit.</th>
+                        <th class="text-right">Total</th>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th>Tipo</th>
+                        <th>CC</th>
+                    </tr>
+                </thead>
+                <tbody id="products-table">
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <br>
+        <br>
+
+        <div class="header-column">
+            <div class="firmas">
+                <div style="border-top: 1px solid #ccc; width: 250px;">
+                    <span id="usuario">Visitador medico</span>
+                </div>
+
+                <div style="border-top: 1px solid #ccc; width: 250px;">
+                    <span id="usuario">Firma depto. financiero de quien revisa</span>
+                </div>
+                <div style="border-top: 1px solid #ccc; width: 250px;">
+                    <span id="usuario">Gerente comercial</span>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="header-column">
+            <div class="firmas">
+                <div style="border-top: 1px solid #ccc; width: 250px;">
+                    <span id="usuario">Coordinador</span>
+                </div>
+
+                <div style="border-top: 1px solid #ccc; width: 250px;">
+                    <span id="usuario">Firma revisado en ventas</span>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+    </div>
+
+    <div class="actions">
+        <button id="printButton" onclick="window.print()">Imprimir</button>
+        <button id="pdfButton">Generar PDF</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Función para obtener valores de la URL
+            const getParam = (param) => urlParams.get(param) || '';
+            // Obtener los datos de los parámetros de la URL
+            const transaccion = getParam('transaccion');
+            const visitador = getParam('visitador');
+            const nitvisitador = getParam('nitvisitador');
+            const periodo = getParam('periodo');
+            const tipoconsumo = getParam('tipoconsumo');
+            const montoasignado = getParam('montoasignado');
+            const fechaliquidacion = getParam('fechaliquidacion');
+            const montoliquidar = getParam('montoliquidar');
+            const diferencia = getParam('diferencia');
+
+            // Parámetros con múltiples valores separados por coma
+            const fecha = getParam('fecha').split(',').map(item => item.trim());
+            const serie = getParam('serie').split(',').map(item => item.trim());
+            const numero = getParam('numero').split(',').map(item => item.trim());
+            const nit = getParam('nit').split(',').map(item => item.trim());
+            const emisor = getParam('emisor').split(',').map(item => item.trim());
+            const cantidad = getParam('cantidad').split(',').map(item => item.trim());
+            const precio = getParam('precio').split(',').map(item => item.trim());
+            const total = getParam('total').split(',').map(item => item.trim());
+            const codigo = getParam('codigo').split(',').map(item => item.trim());
+            const producto = getParam('producto').split(',').map(item => item.trim());
+            const tipo = getParam('tipo').split(',').map(item => item.trim());
+            const ccosto = getParam('ccosto').split(',').map(item => item.trim());
+
+            // Insertar datos en la plantilla
+            document.getElementById('transaccion').textContent = transaccion;
+            document.getElementById('nitvisitador').textContent = nitvisitador;
+            document.getElementById('visitador').textContent = decodeURIComponent(visitador);
+            document.getElementById('montoasignado').textContent = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat(montoasignado || '').toFixed(2));
+            document.getElementById('montoliquidar').textContent = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat(montoliquidar || '').toFixed(2));
+            document.getElementById('diferencia').textContent = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat(diferencia || '').toFixed(2));
+            document.getElementById('fechaliquidacion').textContent = decodeURIComponent(fechaliquidacion);
+            document.getElementById('periodo').textContent = decodeURIComponent(periodo);
+            document.getElementById('tipoconsumo').textContent = decodeURIComponent(tipoconsumo);
+
+            // Llenar la tabla de productos
+            const productsTable = document.getElementById('products-table');
+            for (let i = 0; i < producto.length; i++) {
+                // const fechaForm = new Date(fecha[i])
+
+
+                const fechaForm = new Date(fecha[i]);
+                const fechaAjustada = new Date(fechaForm.getTime());
+                const fechaFormateada = fechaAjustada.toISOString().split('T')[0];
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td  class="text-center" >${fechaFormateada || ''}</td>
+                    <td>${serie[i] || ''}</td>
+                    <td>${numero[i] || ''}</td>
+                    <td>${nit[i] || ''}</td>
+                    <td>${decodeURIComponent(emisor[i] || '')}</td>
+                    <td>${cantidad[i] || ''}</td>
+                    <td class="text-right" >Q ${precio[i] || ''}</td>
+                    <td class="text-right" >Q ${total[i] || ''}</td>
+                    <td>${codigo[i] || ''}</td>
+                    <td>${decodeURIComponent(producto[i] || '')}</td>
+                    <td>${tipo[i] || ''}</td>
+                    <td>${ccosto[i] || ''}</td>
+                `;
+                productsTable.appendChild(row);
+            }
+
+
+            // Configurar el botón de generar PDF
+            document.getElementById('pdfButton').addEventListener('click', () => {
+                const element = document.getElementById('invoice-template');
+                const options = {
+                    margin: 1,
+                    filename: 'factura.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                };
+                html2pdf().from(element).set(options).saveAs();
+            });
+        });
+    </script>
+
+</body>
+
+</html>
