@@ -11,7 +11,6 @@
             background-color: #f4f4f4;
             /* background: #fff; */
             font-size: 12px;
-
             margin: 10px;
             padding: 20px;
 
@@ -62,13 +61,14 @@
         th,
         td {
             border: 1px solid #ccc;
-            padding: 5px;
+            padding: 3px;
             text-align: left;
-            font-size: 12px;
+            font-size: 10px;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #1B7FD1;
+            color: #fff;
         }
 
         .text-right {
@@ -161,18 +161,18 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Fecha factura</th>
-                        <th>Serie</th>
-                        <th>Numero</th>
-                        <th>Nit</th>
+                        <th class="text-center" >Fecha factura</th>
+                        <th class="text-center">Serie</th>
+                        <th class="text-center">Numero</th>
+                        <th class="text-center">Nit</th>
                         <th>Empresa</th>
-                        <th>Cantidad</th>
+                        <th class="text-center" >Cantidad</th>
                         <th class="text-right">Precio Unit.</th>
                         <th class="text-right">Total</th>
-                        <th>Producto</th>
+                        <th class="text-center">Producto</th>
                         <th>Descripción</th>
-                        <th>Tipo</th>
-                        <th>CC</th>
+                        <th class="text-center" >Tipo</th>
+                        <th class="text-center" >CC</th>
                     </tr>
                 </thead>
                 <tbody id="products-table">
@@ -277,18 +277,18 @@
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td  class="text-center" >${fechaFormateada || ''}</td>
-                    <td>${serie[i] || ''}</td>
-                    <td>${numero[i] || ''}</td>
-                    <td>${nit[i] || ''}</td>
+                    <td class="text-center" >${fechaFormateada || ''}</td>
+                    <td class="text-center" >${serie[i] || ''}</td>
+                    <td class="text-center" >${numero[i] || ''}</td>
+                    <td class="text-center" >${nit[i] || ''}</td>
                     <td>${decodeURIComponent(emisor[i] || '')}</td>
-                    <td>${cantidad[i] || ''}</td>
-                    <td class="text-right" >Q ${precio[i] || ''}</td>
-                    <td class="text-right" >Q ${total[i] || ''}</td>
-                    <td>${codigo[i] || ''}</td>
+                    <td class="text-center" >${ new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat( cantidad[i] || '').toFixed(2))}</td>
+                    <td class="text-right" >Q ${ new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat( precio[i] || '').toFixed(2))}</td>
+                    <td class="text-right" >Q ${ new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat( total[i] || '').toFixed(2))}</td>
+                    <td class="text-center" >${codigo[i] || ''}</td>
                     <td>${decodeURIComponent(producto[i] || '')}</td>
-                    <td>${tipo[i] || ''}</td>
-                    <td>${ccosto[i] || ''}</td>
+                    <td class="text-center" >${tipo[i] || ''}</td>
+                    <td class="text-center" >${ccosto[i] || ''}</td>
                 `;
                 productsTable.appendChild(row);
             }
