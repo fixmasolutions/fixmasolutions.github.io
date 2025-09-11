@@ -286,7 +286,7 @@
             for (let i = 0; i < productos.length; i++) {
                 const row = document.createElement('div');
                 row.className = 'table-row';
-                const description = codigos[i] ? `${codigos[i]} ${decodeURIComponent(productos[i])}` : decodeURIComponent(productos[i]);
+                const description = codigos[i] ? `${decodeURIComponent(productos[i])}` : decodeURIComponent(productos[i]);
                 row.innerHTML = `
                     <div>${description || ''}</div>
                     <div class="qty">${cantidades[i] || ''}</div>
