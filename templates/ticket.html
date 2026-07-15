@@ -382,25 +382,24 @@
             });
 
             // Asignar los textos dinámicos
-            document.getElementById('empresaNombre').textContent = empresaNombre || 'Lavanderia';
-            document.getElementById('empresaLema').textContent = empresaLema || 'Lema';
-            document.getElementById('empresaDireccion').textContent = empresaDireccion || '';
-            document.getElementById('empresaTelefono').textContent = empresaTelefono;
-            document.getElementById('empresaMensaje').textContent = empresaMensaje || '¡Gracias por su compra!';
+            if(empresaNombre) document.getElementById('empresaNombre').textContent = empresaNombre || 'Lavanderia';
+            if(empresaLema) document.getElementById('empresaLema').textContent = empresaLema || 'Lema';
+            if(empresaDireccion) document.getElementById('empresaDireccion').textContent = empresaDireccion || '';
+            if(empresaTelefono) document.getElementById('empresaTelefono').textContent = empresaTelefono;
+            if(empresaMensaje) document.getElementById('empresaMensaje').textContent = empresaMensaje || '¡Gracias por su compra!';
 
-            document.getElementById('nit').textContent = nit || 'CF';
-            document.getElementById('cliente').textContent = decodeURIComponent(cliente || 'Consumidor Final');
-            document.getElementById('direccion').textContent = decodeURIComponent(direccion || 'Ciudad');
-            document.getElementById('telefono').textContent = telefono || '---- ----';
-            
-            document.getElementById('transaccion').textContent = transaccion || '---';
-            document.getElementById('fecha').textContent = decodeURIComponent(fecha) || '---';
-            document.getElementById('condicion').textContent = condicion || 'Contado';
+            if(nit) document.getElementById('nit').textContent = nit || 'CF';
+            if(cliente) document.getElementById('cliente').textContent = decodeURIComponent(cliente || 'Consumidor Final');
+            if(direccion) document.getElementById('direccion').textContent = decodeURIComponent(direccion || 'Ciudad');
+            if(telefono) document.getElementById('telefono').textContent = telefono || '---- ----';
+            if(transaccion) document.getElementById('transaccion').textContent = transaccion || '---';
+            if(fecha) document.getElementById('fecha').textContent = decodeURIComponent(fecha) || '---';
+            if(condicion) document.getElementById('condicion').textContent = condicion || 'Contado';
 
             // Formatear montos principales
-            document.getElementById('subtotalticket').textContent = formatter.format(parseFloat(subtotalticket) || 0);
-            document.getElementById('descuento').textContent = formatter.format(parseFloat(descuento) || 0);
-            document.getElementById('total').textContent = formatter.format(parseFloat(total) || 0);
+            if(subtotalticket) document.getElementById('subtotalticket').textContent = formatter.format(parseFloat(subtotalticket) || 0);
+            if(descuento) document.getElementById('descuento').textContent = formatter.format(parseFloat(descuento) || 0);
+            if(total) document.getElementById('total').textContent = formatter.format(parseFloat(total) || 0);
 
             // Cargar productos en formato ticket
             const productsTable = document.getElementById('products-table');
