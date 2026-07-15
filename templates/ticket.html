@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -417,7 +417,7 @@
 
 </body>
 
-</html>
+</html> {% endcomment %}
 
 <!-- ************************** -->
  <!DOCTYPE html>
@@ -737,6 +737,7 @@
     <div class="ticket-container" id="invoice-template">
         <div class="header">
             <h1 id="empresaNombre">Lavanderia Charlie</h1>
+            <h6 id="empresaLema">Lema Empresa</h6>
             <p id="empresaDireccion">Ciudad</p>
             <p id="empresaTelefono">Tel: 3461-3602</p>
         </div>
@@ -857,6 +858,7 @@
 
             // Parámetros de la Empresa
             const empresaNombre = getParam('ename');
+            const empresaLema = getParam('elema');
             const empresaDireccion = getParam('edir');
             const empresaTelefono = getParam('etel') ? 'Tel: ' + getParam('etel') : '';
             const empresaMensaje = getParam('emessage');
@@ -891,6 +893,7 @@
 
             // Asignar los textos dinámicos
             document.getElementById('empresaNombre').textContent = empresaNombre || 'Lavanderia';
+            document.getElementById('empresaLema').textContent = empresaLema || 'Lavanderia';
             document.getElementById('empresaDireccion').textContent = empresaDireccion || '';
             document.getElementById('empresaTelefono').textContent = empresaTelefono;
             document.getElementById('empresaMensaje').textContent = empresaMensaje || '¡Gracias por su compra!';
