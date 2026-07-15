@@ -1,314 +1,548 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liquidación</title>
+    <title>Comprobante de Pago Elegante</title>
     <style>
+        @page {
+            size: A4;
+            margin: 15mm 12mm;
+            background-color: #fcfbfa;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            /* background: #fff; */
-            font-size: 12px;
-            margin: 10px;
-            padding: 20px;
-
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #2c3e50;
+            background-color: #fcfbfa;
+            font-size: 10pt;
+            line-height: 1.4;
         }
+        
 
-        .container {
-            max-width: 1200px;
+        /* Contenedor tipo Factura Estándar */
+        .invoice-box {
+            max-width: 850px;
             margin: auto;
-            margin-top: 0px;
             padding: 20px;
-            /* border: 1px solid #ccc; */
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
         }
-
-        h1,
-        h2 {
-            text-align: center;
-        }
-
-        .header,
-        .details,
-        .footer {
-            margin-bottom: 10px;
-        }
-
-        .header div,
-        .details div {
-            margin-bottom: 5px;
-            margin-top: 0px;
-        }
-
-        .header-column {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .header-column>div {
-            flex: 1;
-        }
-
-        table {
+        
+        /* Top Header Banner */
+        .header-table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        
+        .header-logo-cell {
+            vertical-align: top;
+        }
+        
+        .company-title {
+            font-size: 20pt;
+            font-weight: bold;
+            color: #1a2a3a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .company-subtitle {
+            font-size: 9pt;
+            color: #b38f4f; /* Elegant Gold */
+            font-weight: 600;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .company-details {
+            font-size: 8.5pt;
+            color: #5a6c7d;
+            margin-top: 6px;
+            line-height: 1.3;
+        }
+        
+        .invoice-meta-cell {
+            text-align: right;
+            vertical-align: top;
+        }
+        
+        .invoice-title-badge {
+            display: inline-block;
+            background-color: #1a2a3a;
+            color: #ffffff;
+            padding: 6px 14px;
+            font-weight: bold;
+            font-size: 11pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 3px;
+        }
+        
+        .meta-details {
             margin-top: 10px;
+            font-size: 9pt;
+            color: #2c3e50;
+            line-height: 1.4;
         }
-
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 3px;
-            text-align: left;
-            font-size: 10px;
+        
+        .meta-details span {
+            font-weight: bold;
         }
-
-        th {
-            background-color: #1B7FD1;
+        
+        .condicion-badge {
+            display: inline-block;
+            background-color: #f39c12;
             color: #fff;
+            padding: 2px 8px;
+            font-size: 8pt;
+            font-weight: bold;
+            border-radius: 3px;
+            text-transform: uppercase;
         }
-
-        .text-right {
+        
+        /* Client and Info Section */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background-color: #ffffff;
+            border: 1px solid #eef0f2;
+            border-radius: 4px;
+        }
+        
+        .info-cell {
+            width: 50%;
+            padding: 12px 15px;
+            vertical-align: top;
+            font-size: 9pt;
+        }
+        
+        .info-cell-title {
+            font-weight: bold;
+            font-size: 9.5pt;
+            color: #1a2a3a;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #b38f4f;
+            padding-bottom: 3px;
+        }
+        
+        .info-line {
+            margin: 4px 0;
+            color: #4a5a6a;
+        }
+        
+        .info-line span {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        /* Items Table */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        
+        .items-table th {
+            background-color: #1a2a3a;
+            color: #ffffff;
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 9pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .items-table th.right-align {
             text-align: right;
         }
-
-        .text-center {
-            text-align: center;
+        
+        .items-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eef0f2;
+            font-size: 9pt;
+            color: #2c3e50;
+            vertical-align: middle;
         }
-
-        .firmas {
-            text-align: center;
-            display: flex;
+        
+        .items-table td.right-align {
+            text-align: right;
+        }
+        
+        .items-table tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+        
+        /* Totals Block */
+        .totals-table {
             width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 35px;
+        }
+        
+        .totals-table td {
+            padding: 4px 10px;
+            font-size: 9.5pt;
+        }
+        
+        .totals-label {
+            text-align: right;
+            color: #5a6c7d;
+        }
+        
+        .totals-value {
+            text-align: right;
+            width: 120px;
+            font-weight: 500;
+        }
+        
+        .grand-total-row td {
+            border-top: 1px solid #1a2a3a;
+            padding-top: 8px;
+            font-size: 11pt;
+            font-weight: bold;
+            color: #1a2a3a;
+        }
+        
+        /* Premium Business Card / Advertising Section */
+        .ad-banner {
+            background-color: #1a2a3a;
+            color: #ffffff;
+            border: 2px solid #b38f4f;
+            border-radius: 6px;
+            padding: 20px;
+            position: relative;
             margin-top: 20px;
-            justify-content: space-around;
+            page-break-inside: avoid;
         }
-
-        .tipoconsumo {
-            color: red;
+        
+        .ad-grid {
+            display: table;
+            width: 100%;
         }
-
-        .actions {
+        
+        .ad-left {
+            display: table-cell;
+            width: 60%;
+            vertical-align: middle;
+            padding-right: 15px;
+        }
+        
+        .ad-right {
+            display: table-cell;
+            width: 40%;
+            vertical-align: middle;
+            border-left: 1px dashed #b38f4f;
+            padding-left: 20px;
+            background-color: #142230;
+            border-radius: 0 4px 4px 0;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        .ad-tag {
+            display: inline-block;
+            background-color: #b38f4f;
+            color: #1a2a3a;
+            font-size: 7.5pt;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        
+        .ad-title {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+        
+        .ad-services {
+            font-size: 8.5pt;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .ad-services span {
+            color: #b38f4f;
+            font-weight: bold;
+        }
+        
+        .promo-box {
+            background-color: rgba(179, 143, 79, 0.15);
+            border: 1px solid #b38f4f;
+            border-radius: 4px;
+            padding: 10px 12px;
             text-align: center;
-            margin-top: 20px;
         }
-
-        .actions button {
+        
+        .promo-title {
+            font-size: 10pt;
+            font-weight: bold;
+            color: #e5c17b;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        
+        .promo-text {
+            font-size: 8.5pt;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+        
+        .footer-note {
+            text-align: center;
+            font-size: 8pt;
+            color: #7f8c8d;
+            margin-top: 25px;
+        }
+        
+        /* Actions block (hidden in print) */
+        .actions-bar {
+            text-align: center;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            display: inline-block;
             padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 0 10px;
-            border: none;
+            font-size: 10pt;
+            font-weight: bold;
             color: white;
-            border-radius: 5px;
+            background-color: #1a2a3a;
+            border: 1px solid #1a2a3a;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0 8px;
         }
-
-        #printButton {
-            background-color: #007bff;
+        
+        .btn-secondary {
+            background-color: #b38f4f;
+            border-color: #b38f4f;
         }
-
-        #pdfButton {
-            background-color: #28a745;
-        }
-
+        
         @media print {
-            .actions {
+            .actions-bar {
                 display: none;
             }
-
             body {
-                background-color: #fff;
-                margin: 0;
-                padding: 0;
-            }
-
-            .container {
-                max-width: 100%;
-                box-shadow: inherit;
-                margin: 0;
-                padding: 0;
+                background-color: #ffffff;
             }
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
-
 <body>
 
-    <div class="container" id="invoice-template">
-        <div class="header">
-            <h2>LIQUIDACION DE <span id="tipoconsumo"></span></h2>
-            <div class="header-column">
-                <div><strong>Transacción:</strong> <span id="transaccion"></span></div>
-                <div><strong>Periodo:</strong> <span id="periodo"></span></div>
+    <div class="invoice-box" id="invoice-template">
+        <!-- Header -->
+        <table class="header-table">
+            <tr>
+                <td class="header-logo-cell">
+                    <div class="company-title" id="empresaNombre">Lavandería Charlie</div>
+                    <div class="company-subtitle id="empresaLema"">Multiservicios & Soluciones Integrales</div>
+                    <div class="company-details">
+                        <span id="empresaDireccion">Ciudad de Guatemala</span><br>
+                        <span id="empresaTelefono">Tel: 3461-3602</span>
+                    </div>
+                </td>
+                <td class="invoice-meta-cell">
+                    <div class="invoice-title-badge">Nota de Venta</div>
+                    <div class="meta-details">
+                        <div><span>No:</span> <span id="transaccion">001-A942</span></div>
+                        <div><span>Fecha:</span> <span id="fecha">14/07/2026</span></div>
+                        <div style="margin-top: 5px;"><span class="condicion-badge" id="condicion">Contado</span></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Info Client -->
+        <table class="info-table">
+            <tr>
+                <td class="info-cell" style="border-right: 1px solid #eef0f2;">
+                    <div class="info-cell-title">Datos del Cliente</div>
+                    <div class="info-line"><span>Cliente:</span> <span id="cliente">Consumidor Final</span></div>
+                    <div class="info-line"><span>NIT:</span> <span id="nit">CF</span></div>
+                    <div class="info-line"><span>Dirección:</span> <span id="direccion">Ciudad</span></div>
+                    <div class="info-line"><span>Teléfono:</span> <span id="telefono">---- ----</span></div>
+                </td>
+                <td class="info-cell">
+                    <div class="info-cell-title">Resumen de Cuenta</div>
+                    <div class="info-line"><span>Forma de Pago:</span> Efectivo / Transferencia</div>
+                    <div class="info-line"><span>Moneda:</span> Quetzales (Q)</div>
+                    <div class="info-line"><span>Atendido por:</span> Caja Central</div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Table Items -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th style="width: 55%;">Descripción del Servicio</th>
+                    <th class="right-align" style="width: 12%;">Cantidad</th>
+                    <th class="right-align" style="width: 15%;">P. Unitario</th>
+                    <th class="right-align" style="width: 18%;">SubTotal</th>
+                </tr>
+            </thead>
+            <tbody id="products-table">
+                <!-- Items placeholders -->
+                <tr>
+                    <td>Servicio de Lavandería y Planchado Premium</td>
+                    <td class="right-align">1.00</td>
+                    <td class="right-align">150.00</td>
+                    <td class="right-align">150.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Totals -->
+        <table class="totals-table">
+            <tr>
+                <td class="totals-label">SubTotal:</td>
+                <td class="totals-value" id="subtotalticket">150.00</td>
+            </tr>
+            <tr>
+                <td class="totals-label">Descuento:</td>
+                <td class="totals-value" id="descuento">0.00</td>
+            </tr>
+            <tr class="grand-total-row">
+                <td class="totals-label">Monto Total:</td>
+                <td class="totals-value" id="total">150.00</td>
+            </tr>
+        </table>
+
+        <!-- Publicidad Integrada (Diseño Tarjeta de Publicidad Elegante) -->
+        <!-- <div class="ad-banner">
+            
+            <div class="ad-grid">
+                
+                <div class="ad-left">
+                    
+                    <div class="ad-title">M&J SOLUTIONS</div>
+                    <div class="ad-tag">Soluciones Legales, Contables y Tecnológicas</div>
+                    <div class="ad-services">
+                        <div class="">⚖️ SERVICIOS LEGALES Y NOTARIALES</div>
+                        <div class="">🚗 GESTIONES DE VEHÍCULOS (SAT)</div>
+                        <div class="">🚀 TECNOLOGÍA Y SISTEMAS</div>
+                        <div class="">📊 CONTABILIDAD E IMPUESTOS</div>
+                        <div class="">📑 TRÁMITES ADMINISTRATIVOS</div>
+                     
+                    </div>
+                </div>
+                
+                <div class="ad-right">
+                    <div class="promo-box">
+                        <div class="promo-title">¡PROMO EXCLUSIVA!</div>
+                        <div class="promo-text">
+                            Conserva este comprobante y recibe un <strong>BENEFICIO ESPECIAL</strong> en tu próximo trámite de <strong>TRASPASO DE CARRO O MOTO</strong>.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="header-column">
-                <div><strong>Nombre completo:</strong> <span id="visitador"></span></div>
-                <div><strong>Fecha liquidación:</strong> <span id="fechaliquidacion"></span></div>
-            </div>
-            <div class="header-column">
-                <div><strong>Monto asignado:</strong> <span id="montoasignado"></span></div>
-                <div><strong>NIT:</strong> <span id="nitvisitador"></span></div>
-            </div>
-            <div><strong>Monto a liquidar:</strong> <span id="montoliquidar"></span></div>
-            <div><strong>Saldo:</strong> <span id="diferencia"></span></div>
+            
+            <div class="location-bar">
+                 📍 <strong>Visítenos en:</strong> Manzana A Lote 10 Ciudad Quetzal, San Juan Sacatepéquez. 
+                 (Enfrente de la gasolinera Shell del Autobanco Ciudad Quetzal). ¡Será un gusto servirle!
+             </div>
+        </div> -->
+        <div class="footer-note">
+            <p id="empresaMensaje">¡Gracias por su confianza y preferencia!</p>
+            <p style="font-size: 11px; color: #94a3b8; margin-top: 6px;">Este documento constituye un comprobante interno de venta y entrega.</p>
         </div>
-        <div class="details">
-            <h3 style="text-align: center; font-size: 25px; color: red; font-weight: bold;">Detalle liquidación</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th class="text-center" >Fecha factura</th>
-                        <th class="text-center">Serie</th>
-                        <th class="text-center">Numero</th>
-                        <th class="text-center">Nit</th>
-                        <th>Empresa</th>
-                        <th class="text-center" >Cantidad</th>
-                        <th class="text-right">Precio Unit.</th>
-                        <th class="text-right">Total</th>
-                        <th class="text-center">Producto</th>
-                        <th>Descripción</th>
-                        <th class="text-center" >Tipo</th>
-                        <th class="text-center" >CC</th>
-                    </tr>
-                </thead>
-                <tbody id="products-table">
-                </tbody>
-            </table>
-        </div>
-        <br>
-        <br>
-        <br>
-
-        <div class="header-column">
-            <div class="firmas">
-                <div style="border-top: 1px solid #ccc; width: 250px;">
-                    <span id="usuario">Visitador medico</span>
-                </div>
-
-                <div style="border-top: 1px solid #ccc; width: 250px;">
-                    <span id="usuario">Firma depto. financiero de quien revisa</span>
-                </div>
-                <div style="border-top: 1px solid #ccc; width: 250px;">
-                    <span id="usuario">Gerente comercial</span>
-                </div>
-            </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="header-column">
-            <div class="firmas">
-                <div style="border-top: 1px solid #ccc; width: 250px;">
-                    <span id="usuario">Coordinador</span>
-                </div>
-
-                <div style="border-top: 1px solid #ccc; width: 250px;">
-                    <span id="usuario">Firma revisado en ventas</span>
-                </div>
-            </div>
-        </div>
-
-        <br>
-        <br>
-        <br>
-
     </div>
 
-    <div class="actions">
-        <button id="printButton" onclick="window.print()">Imprimir</button>
-        <button id="pdfButton">Generar PDF</button>
+    <!-- Actions -->
+    <div class="actions-bar">
+        <button class="btn" onclick="window.print()">Imprimir Comprobante</button>
+        <button class="btn btn-secondary" id="pdfButton">Descargar PDF</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-
-            // Función para obtener valores de la URL
             const getParam = (param) => urlParams.get(param) || '';
-            // Obtener los datos de los parámetros de la URL
-            const transaccion = getParam('transaccion');
-            const visitador = getParam('visitador');
-            const nitvisitador = getParam('nitvisitador');
-            const periodo = getParam('periodo');
-            const tipoconsumo = getParam('tipoconsumo');
-            const montoasignado = getParam('montoasignado');
-            const fechaliquidacion = getParam('fechaliquidacion');
-            const montoliquidar = getParam('montoliquidar');
-            const diferencia = getParam('diferencia');
 
-            // Parámetros con múltiples valores separados por coma
-            const fecha = getParam('fecha').split(',').map(item => item.trim());
-            const serie = getParam('serie').split(',').map(item => item.trim());
-            const numero = getParam('numero').split(',').map(item => item.trim());
-            const nit = getParam('nit').split(',').map(item => item.trim());
-            const emisor = getParam('emisor').split(',').map(item => item.trim());
-            const cantidad = getParam('cantidad').split(',').map(item => item.trim());
-            const precio = getParam('precio').split(',').map(item => item.trim());
-            const total = getParam('total').split(',').map(item => item.trim());
-            const codigo = getParam('codigo').split(',').map(item => item.trim());
-            const producto = getParam('producto').split(',').map(item => item.trim());
-            const tipo = getParam('tipo').split(',').map(item => item.trim());
-            const ccosto = getParam('ccosto').split(',').map(item => item.trim());
+            // Parámetros dinámicos
+            if(getParam('ename')) document.getElementById('empresaNombre').textContent = getParam('ename');
+            if(getParam('elema')) document.getElementById('empresaLema').textContent = getParam('elema');
+            if(getParam('edir')) document.getElementById('empresaDireccion').textContent = getParam('edir');
+            if(getParam('etel')) document.getElementById('empresaTelefono').textContent = 'Tel: ' + getParam('etel');
+            if(getParam('emessage')) document.getElementById('empresaMensaje').textContent = getParam('emessage');
 
-            // Insertar datos en la plantilla
-            document.getElementById('transaccion').textContent = transaccion;
-            document.getElementById('nitvisitador').textContent = nitvisitador;
-            document.getElementById('visitador').textContent = decodeURIComponent(visitador);
-            document.getElementById('montoasignado').textContent = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat(montoasignado || '').toFixed(2));
-            document.getElementById('montoliquidar').textContent = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat(montoliquidar || '').toFixed(2));
-            document.getElementById('diferencia').textContent = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat(diferencia || '').toFixed(2));
-            document.getElementById('fechaliquidacion').textContent = decodeURIComponent(fechaliquidacion);
-            document.getElementById('periodo').textContent = decodeURIComponent(periodo);
-            document.getElementById('tipoconsumo').textContent = decodeURIComponent(tipoconsumo);
+            if(getParam('cnit')) document.getElementById('nit').textContent = getParam('cnit');
+            if(getParam('cname')) document.getElementById('cliente').textContent = decodeURIComponent(getParam('cname'));
+            if(getParam('cdir')) document.getElementById('direccion').textContent = decodeURIComponent(getParam('cdir'));
+            if(getParam('ctel')) document.getElementById('telefono').textContent = getParam('ctel');
+            
+            if(getParam('transaccion')) document.getElementById('transaccion').textContent = getParam('transaccion');
+            if(getParam('docfecha')) document.getElementById('fecha').textContent = decodeURIComponent(getParam('docfecha'));
+            if(getParam('doccondicion')) document.getElementById('condicion').textContent = getParam('doccondicion');
 
-            // Llenar la tabla de productos
-            const productsTable = document.getElementById('products-table');
-            for (let i = 0; i < producto.length; i++) {
-                // const fechaForm = new Date(fecha[i])
+            const formatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 });
+            if(getParam('docsubtotalticket')) document.getElementById('subtotalticket').textContent = formatter.format(parseFloat(getParam('docsubtotalticket')));
+            if(getParam('docdescuento')) document.getElementById('descuento').textContent = formatter.format(parseFloat(getParam('docdescuento')));
+            if(getParam('total')) document.getElementById('total').textContent = formatter.format(parseFloat(getParam('total')));
 
+            // Cargar productos si vienen en la URL
+            const codigos = getParam('detcod').split(' , ').map(item => item.trim());
+            const unidadMed = getParam('detmedida').split(' , ').map(item => item.trim());
+            const productos = getParam('detproducto') ? getParam('detproducto').split(' , ').map(item => item.trim()) : [];
+            const cantidades = getParam('detcantidad') ? getParam('detcantidad').split(' , ').map(item => item.trim()) : [];
+            const precios = getParam('detprecioUnit') ? getParam('detprecioUnit').split(' , ').map(item => item.trim()) : [];
+            const subtotales = getParam('detsubtotal') ? getParam('detsubtotal').split(' , ').map(item => item.trim()) : [];
 
-                const fechaForm = new Date(fecha[i]);
-                const fechaAjustada = new Date(fechaForm.getTime());
-                const fechaFormateada = fechaAjustada.toISOString().split('T')[0];
+            if (productos.length > 0) {
+                const tableBody = document.getElementById('products-table');
+                tableBody.innerHTML = '';
+                for (let i = 0; i < productos.length; i++) {
+                    if (!productos[i]) continue;
+                    const row = document.createElement('tr');
+                    // Formar descripción (ej: "Camisas (Pza)")
+                    const descText = codigos[i] && unidadMed[i] 
+                        ? `${decodeURIComponent(productos[i])} (${decodeURIComponent(unidadMed[i])})` 
+                        : decodeURIComponent(productos[i]);
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="text-center" >${fechaFormateada || ''}</td>
-                    <td class="text-center" >${serie[i] || ''}</td>
-                    <td class="text-center" >${numero[i] || ''}</td>
-                    <td class="text-center" >${nit[i] || ''}</td>
-                    <td>${decodeURIComponent(emisor[i] || '')}</td>
-                    <td class="text-center" >${ new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat( cantidad[i] || '').toFixed(2))}</td>
-                    <td class="text-right" >Q ${ new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat( precio[i] || '').toFixed(2))}</td>
-                    <td class="text-right" >Q ${ new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 }).format(parseFloat( total[i] || '').toFixed(2))}</td>
-                    <td class="text-center" >${codigo[i] || ''}</td>
-                    <td>${decodeURIComponent(producto[i] || '')}</td>
-                    <td class="text-center" >${tipo[i] || ''}</td>
-                    <td class="text-center" >${ccosto[i] || ''}</td>
-                `;
-                productsTable.appendChild(row);
+                    row.innerHTML = `
+                        <td>${descText}</td>
+                        <td class="right-align">${cantidades[i] || '1'}</td>
+                        <td class="right-align">${formatter.format(parseFloat(precios[i]) || 0)}</td>
+                        <td class="right-align">${formatter.format(parseFloat(subtotales[i]) || 0)}</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
             }
 
-
-            // Configurar el botón de generar PDF
+            // PDF integration
             document.getElementById('pdfButton').addEventListener('click', () => {
                 const element = document.getElementById('invoice-template');
-                const options = {
-                    margin: 1,
-                    filename: 'factura.pdf',
+                html2pdf().from(element).set({
+                    margin: 12,
+                    filename: 'comprobante_factura.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
-                };
-                html2pdf().from(element).set(options).saveAs();
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                }).save();
             });
         });
     </script>
-
 </body>
-
 </html>
