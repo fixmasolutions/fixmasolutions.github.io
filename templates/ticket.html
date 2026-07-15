@@ -1,4 +1,4 @@
-{% comment %} <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -228,6 +228,7 @@
     <div class="ticket-container" id="invoice-template">
         <div class="header">
             <h1 id="empresaNombre">Lavanderia Charlie</h1>
+            <h1 id="empresaLema">Lema</h1>
             <p id="empresaDireccion">Ciudad</p>
             <p id="empresaTelefono">Tel: 3461-3602</p>
         </div>
@@ -300,6 +301,33 @@
 
         <div class="double-divider"></div>
 
+            <!-- PUBLICIDAD -->
+        <!-- <div class="ad-box">
+            <div class="ad-tag">Soluciones Integrales</div>
+            <div class="ad-title">MULTISERVICIOS JIREH</div>
+            
+            <div class="ad-services-list">
+                • <strong>Gestiones de Vehículos:</strong> Traspasos de carros/motos, tarjeta de circulación, placas.<br>
+                • <strong>Servicios Legales:</strong> Contratos, auténticas y asesoría con Abogado y Notario.<br>
+                • <strong>Contable/SAT:</strong> Inscripción NIT, Agencia Virtual, limpieza de Omisos y pago de impuestos.<br>
+                • <strong>Trámites Administrativos:</strong> RENAP, Antecedentes, Patentes de Comercio.<br>
+                • <strong>Sistemas:</strong> Implementación y consultoría de Odoo ERP.
+            </div>
+
+            <div class="ad-promo-container">
+                <div class="ad-promo-header">🔥 ¡BENEFICIO EXCLUSIVO! 🔥</div>
+                <div class="ad-promo-text">
+                    Conserve este comprobante y obtenga un descuento especial en su próximo <strong>traspaso de vehículo</strong>.
+                </div>
+            </div>
+
+            <div class="ad-location">
+                📍 Manzana A Lote 10 Ciudad Quetzal, San Juan Sacatepéquez. Frente a Shell de Autobanco.
+            </div>
+        </div>
+
+        <div class="divider"></div> -->
+
         <div class="footer">
             <p id="empresaMensaje">¡Gracias por su preferencia!</p>
             <p>*** Conserve este comprobante ***</p>
@@ -320,6 +348,7 @@
 
             // Parámetros de la Empresa
             const empresaNombre = getParam('ename');
+            const empresaLema = getParam('elema');
             const empresaDireccion = getParam('edir');
             const empresaTelefono = getParam('etel') ? 'Tel: ' + getParam('etel') : '';
             const empresaMensaje = getParam('emessage');
@@ -354,6 +383,7 @@
 
             // Asignar los textos dinámicos
             document.getElementById('empresaNombre').textContent = empresaNombre || 'Lavanderia';
+            document.getElementById('empresaLema').textContent = empresaLema || 'Lema';
             document.getElementById('empresaDireccion').textContent = empresaDireccion || '';
             document.getElementById('empresaTelefono').textContent = empresaTelefono;
             document.getElementById('empresaMensaje').textContent = empresaMensaje || '¡Gracias por su compra!';
@@ -417,7 +447,7 @@
 
 </body>
 
-</html> {% endcomment %}
+</html>
 
 <!-- ************************** -->
  <!DOCTYPE html>
