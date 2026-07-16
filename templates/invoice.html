@@ -386,9 +386,9 @@
                 </td>
                 <td class="info-cell">
                     <div class="info-cell-title">Resumen de Cuenta</div>
-                    <div class="info-line"><span>Forma de Pago:</span> Efectivo / Transferencia</div>
+                    <div class="info-line"><span>Forma de Pago:</span>  <span id="formapago">Efectivo</span></div>
                     <div class="info-line"><span>Moneda:</span> Quetzales (Q)</div>
-                    <div class="info-line"><span>Atendido por:</span> Caja Central</div>
+                    <div class="info-line"><span>Atendido por:</span><span id="usuario">Usuario</span></div>
                 </td>
             </tr>
         </table>
@@ -496,6 +496,8 @@
             if(getParam('transaccion')) document.getElementById('transaccion').textContent = getParam('transaccion');
             if(getParam('docfecha')) document.getElementById('fecha').textContent = decodeURIComponent(getParam('docfecha'));
             if(getParam('doccondicion')) document.getElementById('condicion').textContent = getParam('doccondicion');
+            if(getParam('doccondicion')) document.getElementById('formapago').textContent = getParam('docformaPago');
+            if(getParam('doccondicion')) document.getElementById('usuario').textContent = getParam('docusuario');
 
             const formatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2 });
             if(getParam('docsubtotalticket')) document.getElementById('subtotalticket').textContent = formatter.format(parseFloat(getParam('docsubtotalticket')));
